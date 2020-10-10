@@ -9,6 +9,15 @@ const initialState = {
 
 export default class Formulario extends Component{
     state= {...initialState}
+    componentWillMount(){
+        axios(baseUrl).then(resp=>{
+            this.setState({list:resp.data})
+            var a = this.state.list.map(e=> e['local'] == "Jaguaruana")
+            if(a.length > 1){
+                alert("Motorista, há passageiros para você dar carona")
+            }
+        })
+    }
     save(){
         const user = this.state.user
         const method = user.id ? 'put' : 'post'
@@ -30,12 +39,13 @@ export default class Formulario extends Component{
         this.setState({user})
     }
     render(){
+        
         return(
             <div id="form">
             <h1 id="h1">Cadastro para carona</h1>
             <form id="myForm">
                 <div>
-                    <label for="nome">Nome:</label>
+                    <label htmlFor="nome">Nome:</label>
                     <input type="text" id="nome" name="name" value= {this.state.name}
                     onChange= {e=> this.updatedFiled(e)}/>
                 </div>
@@ -51,9 +61,9 @@ export default class Formulario extends Component{
                 
                 <select name="select" id="select">
                     <option value="motorista">Motorista</option> 
-                    <option value="carona" selected>Carona</option>
+                    <option value="carona">Carona</option>
                 </select>
-                <div class="button">
+                <div className="button">
                     <button type="submit" onClick={e => this.save(e)}>Enviar!</button>
                 </div>
             </form>
