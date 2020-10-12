@@ -13,7 +13,7 @@ export default class Formulario extends Component{
         axios(baseUrl).then(resp=>{
             this.setState({list:resp.data})
             var a = this.state.list.map(e=> e['local'] == "Jaguaruana")
-            if(a.length > 1){
+            if(a.length >= 2){
                 alert("Motorista, há passageiros para você dar carona")
             }
         })
